@@ -89,10 +89,11 @@ gem 'quiet_assets', :git => 'git://github.com/AgilionApps/quiet_assets.git'
 # API
 gem 'grape', :git => 'git://github.com/intridea/grape.git', :branch => 'frontier'
 
+gem "memcache-client", "1.8.5"
+
 group :development, :test do
   gem 'capistrano', '2.9.0'
   gem 'chunky_png', "1.2.5"
-  gem "memcache-client", "1.8.5"
   gem 'progress_bar'
   gem 'rspec-rails', '~> 2.8.1'
   gem 'factory_girl_rails'
