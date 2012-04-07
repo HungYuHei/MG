@@ -11,13 +11,5 @@ describe HomeController do
       get :index
       page.should have_content('注册')
     end
-
-    it "should have hot topic lists if user is signed in" do
-      visit '/'
-      sign_in user
-
-      get :index
-      page.should have_content('热门帖子')
-    end
   end
 end
