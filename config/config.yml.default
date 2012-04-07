@@ -5,17 +5,18 @@ defaults: &defaults
   admin_emails: 
     - "admin@admin.com"
   google_analytics_key: ""
-  upload_url: "http://ruby-china-files-dev.b0.upaiyun.com"
-  upyun_username: "test"
-  upyun_password: "123123"
-  upyun_bucket: "ruby-china-files-dev"
   google_group_email: "shanghaionrails@googlegroups.com"
-  email_sender: 'no-reply@ruby-china.org'
+  email_sender: 'no-reply@hepaimusic.org'
   aws_access_key_id: ''
   aws_secret_access_key: ''
   google_js_api_key: "ABQIAAAAC-ble-vmy_g7-Qvem5P86xTX2XchcwgyHzp4Xo0DHRAzt2aLjhQnflwIyCJBOWYCE_rFuUkE0qEmhw"
   twitter_id: "ruby_china"
   gravatar_proxy: "http://gravatar.com"
+
+  upyun_username: ""
+  upyun_password: ""
+  upyun_bucket: ""
+  upload_url: "http://mg-forum.b0.upaiyun.com"
 
   weibo_token: ""
   weibo_secret: ""
