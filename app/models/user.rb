@@ -1,5 +1,4 @@
 # coding: utf-8
-require "ruby-github"
 require "securerandom"
 class User
   include Mongoid::Document
@@ -19,7 +18,6 @@ class User
   field :location_id, :type => Integer
   field :bio
   field :website
-  field :github
   # 是否信任用户
   field :verified, :type => Boolean, :default => true
   field :state, :type => Integer, :default => 1
@@ -60,7 +58,7 @@ class User
   end
 
   attr_accessor :password_confirmation
-  attr_accessible :name, :email, :location, :bio, :website, :github, :tagline, :avatar, :password, :password_confirmation
+  attr_accessible :name, :email, :location, :bio, :website, :tagline, :avatar, :password, :password_confirmation
 
   validates :login, :format => {:with => /\A\w+\z/, :message => '只允许数字、大小写字母和下划线'}, :length => {:in => 3..20}, :presence => true, :uniqueness => {:case_sensitive => false}
 
@@ -78,11 +76,6 @@ class User
   def password_required?
     return false if self.guest
     (authorizations.empty? || !password.blank?) && super
-  end
-
-  def github_url
-    return "" if self.github.blank?
-    "https://github.com/#{self.github.split('/').last}"
   end
 
   # 是否是管理员
@@ -216,32 +209,11 @@ class User
     self.login = "Guest"
     self.bio = ""
     self.website = ""
-    self.github = ""
     self.tagline = ""
     self.location = ""
     self.authorizations = []
     self.state = STATE[:deleted]
     self.save(:validate => false)
-  end
-
-  # Github 项目
-  def github_repositories
-    return [] if self.github.blank?
-    count = 14
-    cache_key = "github_repositories:#{self.github}+#{count}+v1"
-    items = Rails.cache.read(cache_key)
-    if items == nil
-      begin
-        github = GitHub::API.user(self.github)
-        items = github.repositories.sort { |a1,a2| a2.watchers <=> a1.watchers }.take(count)
-        Rails.cache.write(cache_key, items, :expires_in => 7.days)
-      rescue => e
-        Rails.logger.error("Github Repositiory fetch Error: #{e}")
-        items = []
-        Rails.cache.write(cache_key, items, :expires_in => 1.days)
-      end
-    end
-    items
   end
 
   # 重新生成 Private Token

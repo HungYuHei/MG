@@ -3,7 +3,7 @@ require "digest/md5"
 module RubyChina
   module APIEntities
     class User < Grape::Entity
-      expose :_id, :name, :login, :location, :website, :bio, :tagline, :github_url
+      expose :_id, :name, :login, :location, :website, :bio, :tagline
       expose(:gravatar_hash) { |model, opts| Digest::MD5.hexdigest(model.email || "") }
       expose(:avatar_url) { |model, opts| model.avatar? ? model.avatar.url(:normal) : "" }
     end

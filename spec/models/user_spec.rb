@@ -118,20 +118,6 @@ describe User do
     end
   end
 
-  describe "github url" do
-    subject { Factory(:user, :github => 'monkey') }
-    let(:expected) { "https://github.com/monkey" }
-
-    context "user name provided correct" do
-      its(:github_url) { should == expected }
-    end
-
-    context "user name provided as full url" do
-      before { subject.stub!(:github).and_return("http://github.com/monkey") }
-      its(:github_url) { should == expected }
-    end
-  end
-
   describe "private token generate" do
     it "should generate new token" do
       old_token = user.private_token

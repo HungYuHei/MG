@@ -61,10 +61,6 @@ module UsersHelper
     user.tagline
   end
 
-  def render_user_github_url(user)
-    link_to(user.github_url, user.github_url, :target => "_blank", :rel => "nofollow")
-  end
-
   def render_user_personal_website(user)
     website = user.website[/^https?:\/\//] ? user.website : "http://" + user.website
     link_to(website, website, :target => "_blank", :rel => "nofollow")
