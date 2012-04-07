@@ -10,7 +10,6 @@ defaults: &defaults
   aws_access_key_id: ''
   aws_secret_access_key: ''
   google_js_api_key: "ABQIAAAAC-ble-vmy_g7-Qvem5P86xTX2XchcwgyHzp4Xo0DHRAzt2aLjhQnflwIyCJBOWYCE_rFuUkE0qEmhw"
-  twitter_id: "ruby_china"
   gravatar_proxy: "http://gravatar.com"
 
   upyun_username: ""
