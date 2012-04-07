@@ -76,6 +76,8 @@
   sites:
     create: Submit a site
   menu:
+    hepaimusic: 'HepaiMusic'
+    musicianguide: 'MusicianGuide'
     topics: "Discussion"
     wiki: "Wiki"
     posts: "Posts"

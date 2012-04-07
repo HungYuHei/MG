@@ -78,6 +78,8 @@
   sites:
     create: "登記網站"
   menu:
+    hepaimusic: '合拍網'
+    musicianguide: '音樂人攻略'
     topics: "社區"
     wiki: "Wiki"
     posts: "文章"
