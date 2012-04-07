@@ -35,12 +35,10 @@ gem 'will_paginate', '3.0.2'
 gem 'will_paginate_mongoid', '~> 1.0.2'
 gem 'bootstrap-will_paginate', '0.0.3'
 
-# 三方平台 OAuth 验证登陆
+# 第三方平台 OAuth 验证登陆
 gem "omniauth", "~> 1.0.1"
-gem 'omniauth-openid', "~> 1.0.1"
-gem "omniauth-github", "~> 1.0.0"
-gem "omniauth-twitter", "~> 0.0.7"
 gem "omniauth-douban", :git => "git://github.com/ballantyne/omniauth-douban.git"
+gem 'omniauth-weibo', :git => 'git://github.com/ballantyne/omniauth-weibo.git'
 
 # permission
 gem "cancan", "~> 1.6.7"

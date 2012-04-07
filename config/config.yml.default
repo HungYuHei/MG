@@ -13,15 +13,15 @@ defaults: &defaults
   email_sender: 'no-reply@ruby-china.org'
   aws_access_key_id: ''
   aws_secret_access_key: ''
-  twitter_token: "uJ9fBa53SmqrHBqs1qq5cg"
-  twitter_secret: "b9e9hbsa9sYYCqmW0kTyfALshclmkQX4kzTm8BBBTw"
-  github_token: "207bd3415f6f42bcf8da"
-  github_secret: "8d51636e1325cd4a0af78efe567a35f29d42096d"
-  douban_token: "04fab3198986e6350ef0194c9c94b29f"
-  douban_secret: "5c08eac53cfa1890"
   google_js_api_key: "ABQIAAAAC-ble-vmy_g7-Qvem5P86xTX2XchcwgyHzp4Xo0DHRAzt2aLjhQnflwIyCJBOWYCE_rFuUkE0qEmhw"
   twitter_id: "ruby_china"
   gravatar_proxy: "http://gravatar.com"
+
+  weibo_token: ""
+  weibo_secret: ""
+
+  douban_token: ""
+  douban_secret: ""
 
 development:
   <<: *defaults
