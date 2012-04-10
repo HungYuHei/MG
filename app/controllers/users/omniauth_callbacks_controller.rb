@@ -1,18 +1,23 @@
 # coding: utf-8
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  PROVIDER_NAME = {
+    :douban => '豆瓣',
+    :weibo => '新浪微博'
+  }
+
   def self.provides_callback_for(*providers)
     providers.each do |provider|
       class_eval %Q{
         def #{provider}
-          if not current_user.blank?
+          if user_signed_in?
             current_user.bind_service(env["omniauth.auth"])#Add an auth to existing
-            redirect_to edit_user_registration_path, :notice => "成功绑定了 #{provider} 帐号。"
+            redirect_to edit_user_registration_path, :notice => "成功绑定了 #{PROVIDER_NAME[provider]} 帐号。"
           else
             @user = User.find_or_create_for_#{provider}(env["omniauth.auth"])
 
             if @user.persisted?
-              flash[:notice] = "Signed in with #{provider.to_s.titleize} successfully."
-              sign_in_and_redirect @user, :event => :authentication, :notice => "登陆成功。"
+              flash[:notice] = "使用 #{PROVIDER_NAME[provider]} 帐号登录成功。"
+              sign_in_and_redirect @user, :event => :authentication
             else
               redirect_to new_user_registration_url
             end
