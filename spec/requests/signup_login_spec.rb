@@ -3,6 +3,10 @@ require 'spec_helper'
 
 describe "sign up and login" do
 
+  before(:each) do
+    Setting['registerable'] = true
+  end
+
   it "let user sign up and login to the site" do
     visit '/'
     click_link '注册'

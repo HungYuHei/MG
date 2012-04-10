@@ -18,6 +18,8 @@
     published_at: "发表于"
     register: "注册"
     login: "登录"
+    weibo_login: "新浪微博登录"
+    douban_login: "豆瓣登录"
     logining: "正在登录"
     logout: "退出"
     remember_me: "记住登录状态"

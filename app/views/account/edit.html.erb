@@ -4,7 +4,7 @@
       <fieldset>
         <legend><%= t("users.personal_information")%></legend>
           <% if params[:by].blank? %>
-              <%= render "shared/error_messages", :target => resource %> 
+              <%= render "shared/error_messages", :target => resource %>
           <% end %>
           <div class="clearfix">
             <%= f.label :name %>
@@ -55,38 +55,40 @@
       </fieldset>
     <% end %>
   </div>
-  <div class="box">
-    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name,:by => :pwd), :html => { :method => :put }) do |f| %>
-      <fieldset>
-          <legend><%= t("users.edit_password")%></legend>
-          <% if params[:by] == "pwd" %>
-            <%= render "shared/error_messages", :target => resource %>
-          <% end %>
-          <input type="hidden" name="user[:by]" value="pwd" />
+  <% if Setting.registerable %>
+    <div class="box">
+      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name,:by => :pwd), :html => { :method => :put }) do |f| %>
+        <fieldset>
+            <legend><%= t("users.edit_password")%></legend>
+            <% if params[:by] == "pwd" %>
+              <%= render "shared/error_messages", :target => resource %>
+            <% end %>
+            <input type="hidden" name="user[:by]" value="pwd" />
+            <div class="clearfix">
+            <%= f.label :current_password %>
+            <div class="input">
+              <%= f.password_field :current_password %>
+            </div>
+          </div>
           <div class="clearfix">
-          <%= f.label :current_password %>
-          <div class="input">
-            <%= f.password_field :current_password %>
+            <%= f.label :password %>
+            <div class="input">
+              <%= f.password_field :password %>
+            </div>
           </div>
-        </div>
-        <div class="clearfix">
-          <%= f.label :password %>
-          <div class="input">
-            <%= f.password_field :password %>
+          <div class="clearfix">
+            <%= f.label :password_confirmation %>
+            <div class="input">
+              <%= f.password_field :password_confirmation %>
+            </div>
           </div>
-        </div>
-        <div class="clearfix">
-          <%= f.label :password_confirmation %>
-          <div class="input">
-            <%= f.password_field :password_confirmation %>
-          </div>
-        </div>        
-          <div class="actions">
-              <%= f.submit "修改密码", :class => "btn success", :disable_with => t("common.saving") %>
-          </div>
-        </fieldset>
-      <% end %>
-  </div>
+            <div class="actions">
+                <%= f.submit "修改密码", :class => "btn success", :disable_with => t("common.saving") %>
+            </div>
+          </fieldset>
+        <% end %>
+    </div>
+  <% end %>
 </div>
 
 <div class="sidebar">

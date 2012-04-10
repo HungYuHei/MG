@@ -1,5 +1,7 @@
 # coding: utf-8
 class AccountController < Devise::RegistrationsController
+  before_filter :authenticate_registerable!, :only => [:new, :create]
+
   def edit
     @user = current_user
     # 首次生成用户 Token
@@ -36,4 +38,12 @@ class AccountController < Devise::RegistrationsController
     sign_out_and_redirect("/login")
     set_flash_message :notice, :destroyed
   end
+
+  private
+
+    def authenticate_registerable!
+      if not Setting.registerable
+        redirect_to root_path, :notice => '论坛已关闭注册功能'
+      end
+    end
 end

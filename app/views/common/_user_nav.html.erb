@@ -27,7 +27,9 @@
 </ul>
 <% else %>
   <%= render_list :class => "nav secondary-nav", :id => "userbar" do |li|
-    li << link_to( t("common.register"),new_user_registration_path)
-    li << link_to( t("common.login"), new_user_session_path )
+    li << link_to_if( Setting.registerable, t("common.register"), new_user_registration_path ){}
+    li << link_to_if( Setting.registerable, t("common.login"), new_user_session_path ){}
+    li << link_to( t("common.weibo_login"), user_omniauth_authorize_path(:weibo) )
+    li << link_to( t("common.douban_login"), user_omniauth_authorize_path(:douban) )
   end %>
 <% end %>

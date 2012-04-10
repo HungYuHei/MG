@@ -11,6 +11,7 @@ defaults: &defaults
   aws_secret_access_key: ''
   google_js_api_key: "ABQIAAAAC-ble-vmy_g7-Qvem5P86xTX2XchcwgyHzp4Xo0DHRAzt2aLjhQnflwIyCJBOWYCE_rFuUkE0qEmhw"
   gravatar_proxy: "http://gravatar.com"
+  registerable: false # 是否开放注册
 
   upyun_username: ""
   upyun_password: ""
