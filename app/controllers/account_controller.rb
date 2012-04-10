@@ -4,8 +4,6 @@ class AccountController < Devise::RegistrationsController
 
   def edit
     @user = current_user
-    # 首次生成用户 Token
-    @user.update_private_token if @user.private_token.blank?
   end
 
   def update_private_token
