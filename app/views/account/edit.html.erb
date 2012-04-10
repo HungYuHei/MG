@@ -1,15 +1,16 @@
 <div class="content">
   <div class="box">
-    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :enctype =>  "multipart/form-data" }) do |f| %>
+    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :enctype =>  "multipart/form-data" }) do |f| %>
       <fieldset>
         <legend><%= t("users.personal_information")%></legend>
           <% if params[:by].blank? %>
               <%= render "shared/error_messages", :target => resource %>
           <% end %>
           <div class="clearfix">
-            <%= f.label :name %>
+            <%= f.label :login %>
             <div class="input">
-              <%= f.text_field :name %>
+              <%= f.text_field :login %>
+              <span class="help-inline">支持数字、大小写字母和下划线</span>
             </div>
           </div>
           <div class="clearfix">
@@ -27,8 +28,8 @@
           <div class="clearfix">
             <%= f.label :location %>
             <div class="input">
-              <%= f.text_field :location, :class => "span3" %><br />
-              <span class="help-block"><%= t("users.please_use_chinese_city")%></span>
+              <%= f.text_field :location %>
+              <span class="help-inline"><%= t("users.please_use_chinese_city")%></span>
             </div>
           </div>
           <div class="clearfix">

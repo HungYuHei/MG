@@ -58,7 +58,7 @@ class User
   end
 
   attr_accessor :password_confirmation
-  attr_accessible :name, :email, :location, :bio, :website, :tagline, :avatar, :password, :password_confirmation
+  attr_accessible :login, :name, :email, :location, :bio, :website, :tagline, :avatar, :password, :password_confirmation
 
   validates :login, :format => {:with => /\A\w+\z/, :message => '只允许数字、大小写字母和下划线'}, :length => {:in => 3..20}, :presence => true, :uniqueness => {:case_sensitive => false}
 
