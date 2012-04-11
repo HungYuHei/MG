@@ -29,7 +29,7 @@ class User
       User.new do |user|
         user.email = data["email"] || "#{provider}+#{uid}@example.com"
         user.name = data['name']
-        user.login = data["nickname"].gsub(/[^\w]/, "_")
+        user.login = data["nickname"].gsub(/[^A-Za-z0-9\p{han}_]/, "_")
 
         if User.where(:login => user.login).count > 0 || user.login.blank?
           user.login = "u#{Time.now.to_i}" # TODO: possibly duplicated user login here. What should we do?

@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'spec_helper'
 
 describe User do
@@ -143,6 +144,17 @@ describe User do
       user.favorite_topic_ids.include?(topic.id).should == false
       user.unfavorite_topic(nil).should == false
       user.unfavorite_topic(topic.id.to_s).should == true
+    end
+  end
+
+  describe 'login field' do
+    it "should validate format" do
+      user.login = '中文ABcd12_'
+      user.should be_valid
+      user.login = '中 文ABcd12_'
+      user.should_not be_valid
+      user.login = '*中文ABcd12_'
+      user.should_not be_valid
     end
   end
 end
