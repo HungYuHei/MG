@@ -1,3 +1,4 @@
+# coding: utf-8
 require "spec_helper"
 
 describe User::OmniauthCallbacks do
@@ -23,8 +24,8 @@ describe User::OmniauthCallbacks do
     end
 
     it "should escape illegal characters in nicknames properly" do
-      data["nickname"] = "I <3 Rails"
-      callback.new_from_provider_data(nil, nil, data).login.should == "I__3_Rails"
+      data["nickname"] = "I <3 Rails中文"
+      callback.new_from_provider_data(nil, nil, data).login.should == "I__3_Rails中文"
     end
 
     it "should generate random login if login is empty" do

@@ -43,7 +43,7 @@ class Reply
 
   before_save :extract_mentioned_users
   def extract_mentioned_users
-    logins = body.scan(/@(\w{3,20})/).flatten
+    logins = body.scan(/@([#{User::LOGIN_FORMATTING}]{3,20})/).flatten
     if logins.any?
       self.mentioned_user_ids = User.where(:login => /^(#{logins.join('|')})$/i, :_id.ne => user.id).limit(5).only(:_id).map(&:_id).to_a
     end

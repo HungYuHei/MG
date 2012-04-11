@@ -8,6 +8,8 @@ class User
   extend OmniauthCallbacks
   cache
 
+  LOGIN_FORMATTING = 'A-Za-z0-9\p{han}_'
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
@@ -60,7 +62,9 @@ class User
   attr_accessor :password_confirmation
   attr_accessible :login, :name, :email, :location, :bio, :website, :tagline, :avatar, :password, :password_confirmation
 
-  validates :login, :format => {:with => /\A\w+\z/, :message => '只允许数字、大小写字母和下划线'}, :length => {:in => 3..20}, :presence => true, :uniqueness => {:case_sensitive => false}
+  validates :login, :format => { :with => /^[#{LOGIN_FORMATTING}]+$/, :message => '只支持中文、大小写字母、数字和下划线' },
+            :length => { :in => 3..20 }, :presence => true, :uniqueness => { :case_sensitive => false }
+
 
   has_and_belongs_to_many :following_nodes, :class_name => 'Node', :inverse_of => :followers
   has_and_belongs_to_many :following, :class_name => 'User', :inverse_of => :followers
@@ -107,7 +111,7 @@ class User
   def send_welcome_mail
     UserMailer.welcome(self.id).deliver
   end
-  
+
   # 保存用户所在城市
   before_save :store_location
   def store_location
@@ -183,7 +187,7 @@ class User
                :likeable_type => likeable.class,
                :user_id => self.id).destroy
   end
-  
+
   # 收藏话题
   def favorite_topic(topic_id)
     return false if topic_id.blank?
@@ -192,7 +196,7 @@ class User
     self.push(:favorite_topic_ids, topic_id)
     true
   end
-  
+
   # 取消对话题的收藏
   def unfavorite_topic(topic_id)
     return false if topic_id.blank?
