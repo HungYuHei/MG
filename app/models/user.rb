@@ -8,6 +8,8 @@ class User
   extend OmniauthCallbacks
   cache
 
+  LOGIN_FORMATTING = 'A-Za-z0-9\p{han}_'
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
@@ -60,7 +62,7 @@ class User
   attr_accessor :password_confirmation
   attr_accessible :login, :name, :email, :location, :bio, :website, :tagline, :avatar, :password, :password_confirmation
 
-  validates :login, :format => { :with => /^[A-Za-z0-9\p{han}_]+$/, :message => '只支持中文、大小写字母、数字和下划线' },
+  validates :login, :format => { :with => /^[#{LOGIN_FORMATTING}]+$/, :message => '只支持中文、大小写字母、数字和下划线' },
             :length => { :in => 3..20 }, :presence => true, :uniqueness => { :case_sensitive => false }
 
 
