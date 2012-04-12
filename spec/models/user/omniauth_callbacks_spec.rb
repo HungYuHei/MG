@@ -1,3 +1,4 @@
+# coding: utf-8
 require "spec_helper"
 
 describe User::OmniauthCallbacks do
@@ -14,22 +15,17 @@ describe User::OmniauthCallbacks do
       callback.new_from_provider_data(nil, nil, data).should be_a(User)
     end
 
-    it "should handle provider twitter properly" do
-      user = callback.new_from_provider_data("twitter", uid, data).email.should == "twitter+42@example.com"
+    it "should handle provider weibo properly" do
+      callback.new_from_provider_data("weibo", uid, data.merge!({'email' => nil})).email.should == "weibo+42@example.com"
     end
 
     it "should handle provider douban properly" do
-      callback.new_from_provider_data("douban", uid, data).email.should == "douban+42@example.com"
-    end
-
-    it "should handle provider google properly" do
-      data["name"] = "the_lucky_stiff"
-      callback.new_from_provider_data("google", uid, data).login.should == "the_lucky_stiff"
+      callback.new_from_provider_data("douban", uid, data.merge!({'email' => nil})).email.should == "douban+42@example.com"
     end
 
     it "should escape illegal characters in nicknames properly" do
-      data["nickname"] = "I <3 Rails"
-      callback.new_from_provider_data(nil, nil, data).login.should == "I__3_Rails"
+      data["nickname"] = "I <3 Rails中文"
+      callback.new_from_provider_data(nil, nil, data).login.should == "I__3_Rails中文"
     end
 
     it "should generate random login if login is empty" do

@@ -18,6 +18,8 @@
     published_at: "Published At"
     register: "Register"
     login: "Sign In"
+    weibo_login: "Sign In with Weibo"
+    douban_login: "Sign In with Douban"
     logining: "Sign In..."
     logout: "Sign Out"
     remember_me: "Remember Me"
@@ -76,6 +78,8 @@
   sites:
     create: Submit a site
   menu:
+    hepaimusic: 'HepaiMusic'
+    musicianguide: 'MusicianGuide'
     topics: "Discussion"
     wiki: "Wiki"
     posts: "Posts"

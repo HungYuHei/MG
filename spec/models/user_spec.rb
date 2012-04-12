@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'spec_helper'
 
 describe User do
@@ -118,20 +119,6 @@ describe User do
     end
   end
 
-  describe "github url" do
-    subject { Factory(:user, :github => 'monkey') }
-    let(:expected) { "https://github.com/monkey" }
-
-    context "user name provided correct" do
-      its(:github_url) { should == expected }
-    end
-
-    context "user name provided as full url" do
-      before { subject.stub!(:github).and_return("http://github.com/monkey") }
-      its(:github_url) { should == expected }
-    end
-  end
-
   describe "private token generate" do
     it "should generate new token" do
       old_token = user.private_token
@@ -157,6 +144,17 @@ describe User do
       user.favorite_topic_ids.include?(topic.id).should == false
       user.unfavorite_topic(nil).should == false
       user.unfavorite_topic(topic.id.to_s).should == true
+    end
+  end
+
+  describe 'login field' do
+    it "should validate format" do
+      user.login = '中文ABcd12_'
+      user.should be_valid
+      user.login = '中 文ABcd12_'
+      user.should_not be_valid
+      user.login = '*中文ABcd12_'
+      user.should_not be_valid
     end
   end
 end

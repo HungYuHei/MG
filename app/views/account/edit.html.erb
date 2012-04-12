@@ -6,19 +6,10 @@
       <% end %>
       <fieldset>
         <legend><%= t("users.personal_information")%></legend>
-        <%= f.input :name %>
+        <%= f.input :login %>
         <%= f.input :avatar %>
         <%= f.input :email, :input_html => { :class => "span6" } %>
         <%= f.input :location, :input_html => { :class => "span3" } %>
-        <div class="control-group string optional">
-          <%= f.label :github, :class => "string optional control-label" %>
-          <div class="controls">
-            <div class="input-prepend">
-              <span class="add-on">https://github.com/</span>
-              <%= f.text_field :github, :class => "small", :placeholder => "yourname" %>
-            </div>
-          </div>
-        </div>
         <%= f.input :website, :input_html => { :class => "span6", :placeholder => "http://" } %>
         <%= f.input :tagline, :input_html => { :class => "span6" } %>
         <%= f.input :bio, :as => :text, :input_html => { :class => "span6", :rows => "6" } %>
@@ -28,33 +19,32 @@
       </fieldset>
     <% end %>
   </div>
-  <div class="box">
-    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name,:by => :pwd), :html => { :method => :put }) do |f| %>
-      <% if params[:by] == "pwd" %>
-        <%= render "shared/error_messages", :target => resource %>
+  <% if Setting.registerable %>
+    <div class="box">
+      <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name,:by => :pwd), :html => { :method => :put }) do |f| %>
+        <% if params[:by] == "pwd" %>
+          <%= render "shared/error_messages", :target => resource %>
+        <% end %>
+        <fieldset>
+          <legend><%= t("users.edit_password")%></legend>
+          <input type="hidden" name="user[:by]" value="pwd" />
+          <%= f.input :current_password %>
+          <%= f.input :password %>
+          <%= f.input :password_confirmation %>   
+          <div class="form-actions">
+            <%= f.submit "修改密码", :class => "btn btn-success", :disable_with => t("common.saving") %>
+          </div>
+        </fieldset>
       <% end %>
-      <fieldset>
-        <legend><%= t("users.edit_password")%></legend>
-        <input type="hidden" name="user[:by]" value="pwd" />
-        <%= f.input :current_password %>
-        <%= f.input :password %>
-        <%= f.input :password_confirmation %>   
-        <div class="form-actions">
-          <%= f.submit "修改密码", :class => "btn btn-success", :disable_with => t("common.saving") %>
-        </div>
-      </fieldset>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>
 
 <div class="sidebar">
-  <div class="box" style="text-align:center;">
-     <%= user_avatar_tag(@user, :big, :link => false) %> <br /><%= t("users.edit_on_gravatar") %> <a href="http://www.gravatar.com">gravatar.com</a>
-  </div>
   <div class="box">
     <h2><%= t("users.bind_another_account")%></h2>
     <ul>
-      <% ["github"].each do |provider| %>
+      <% ['weibo', 'douban'].each do |provider| %>
       <li>
         <% if @user.bind? provider %>
           <%= link_to( provider.titleize, "/account/auth/#{provider}/unbind", :rel => "twitsy", :title => "点击解除绑定" )%>
@@ -67,29 +57,7 @@
     </ul>
   </div>
   <div class="box">
-    <h2>密钥</h2>
-    <div class="content">
-      <div><textarea id="private_token" style="width:190px;height:20px;cursor:default;" readonly="readonly"><%= @user.private_token %></textarea></div>
-      <div class="buttons">
-        <a href="#" class="btn" id="update_private_token">更换一个</a> <span class="help-inline">用于三方应用验证</span>
-      </div>
-    </div>
-  </div>
-  <div class="box">
     <h2><%= t("users.delete_my_account")%></h2>
     <p><%= t("users.dont_like_it")%> <%= link_to(t("users.delete_this_account"), registration_path(resource_name), :confirm => "删除后无法恢复，你确定吗?", :class => "btn btn-danger", :method => :delete )%></p>
   </div>
 </div>
-
-<% content_for :scripts do %>
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $("#update_private_token").click(function(){
-        $.get("<%= update_private_token_account_path %>",function(re){
-          $("#private_token").val(re);
-        });
-        return false;
-      })
-    });
-  </script>
-<% end %>

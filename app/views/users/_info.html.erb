@@ -7,11 +7,8 @@
     <ul>
         <li class="with_nbsp"><span>&nbsp;</span>第 <%= @user.id %> 位<%= t("menu.users")%></li>
         <li><span>ID:</span><strong><%= @user.login %></strong></li>
-        <% if !@user.name.blank? %>
-        <li><span>Name:</span><strong><%= @user.name %></strong></li>
-        <% end %>
-        <% if !@user.location.blank? %>
-             <li><span><%= t("users.city")%>:</span><%= location_name_tag(@user.location) %></li>
+        <% if @user.location.present? %>
+           <li><span><%= t("users.city")%>:</span><%= location_name_tag(@user.location) %></li>
         <% end %>
         
         <li><span><%= t("users.join_time")%>:</span><%= render_user_join_time(@user) %></li>

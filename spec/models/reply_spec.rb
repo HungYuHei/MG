@@ -1,9 +1,10 @@
+# coding: utf-8
 require 'spec_helper'
 
 describe Reply do
   describe "extract mention" do
     it "should extract mentioned user ids" do
-      user = Factory :user
+      user = Factory :user, :login => '中文ABcd12_'
       reply = Factory :reply, :body => "@#{user.login}"
       reply.mentioned_user_ids.should == [user.id]
       reply.mentioned_user_logins.should == [user.login]

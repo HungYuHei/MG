@@ -1,7 +1,9 @@
+# coding: utf-8
+
 FactoryGirl.define do
   factory :user do
-    sequence(:name){|n| "name#{n}" }
-    sequence(:login){|n| "login#{n}" }
+    sequence(:name){|n| "中文Ac2_#{n}" }
+    sequence(:login){|n| "中文ABcd12_#{n}" }
     sequence(:email){|n| "email#{n}@ruby-chine.org" }
     password 'password'
     password_confirmation 'password'

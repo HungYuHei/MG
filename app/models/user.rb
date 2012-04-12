@@ -1,5 +1,4 @@
 # coding: utf-8
-require "ruby-github"
 require "securerandom"
 class User
   include Mongoid::Document
@@ -8,6 +7,8 @@ class User
   include Redis::Objects
   extend OmniauthCallbacks
   cache
+
+  LOGIN_FORMATTING = 'A-Za-z0-9\p{han}_'
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
@@ -19,7 +20,6 @@ class User
   field :location_id, :type => Integer
   field :bio
   field :website
-  field :github
   # 是否信任用户
   field :verified, :type => Boolean, :default => true
   field :state, :type => Integer, :default => 1
@@ -60,9 +60,11 @@ class User
   end
 
   attr_accessor :password_confirmation
-  attr_accessible :name, :email, :location, :bio, :website, :github, :tagline, :avatar, :password, :password_confirmation
+  attr_accessible :login, :name, :email, :location, :bio, :website, :tagline, :avatar, :password, :password_confirmation
 
-  validates :login, :format => {:with => /\A\w+\z/, :message => '只允许数字、大小写字母和下划线'}, :length => {:in => 3..20}, :presence => true, :uniqueness => {:case_sensitive => false}
+  validates :login, :format => { :with => /^[#{LOGIN_FORMATTING}]+$/, :message => '只支持中文、大小写字母、数字和下划线' },
+            :length => { :in => 3..20 }, :presence => true, :uniqueness => { :case_sensitive => false }
+
 
   has_and_belongs_to_many :following_nodes, :class_name => 'Node', :inverse_of => :followers
   has_and_belongs_to_many :following, :class_name => 'User', :inverse_of => :followers
@@ -78,11 +80,6 @@ class User
   def password_required?
     return false if self.guest
     (authorizations.empty? || !password.blank?) && super
-  end
-
-  def github_url
-    return "" if self.github.blank?
-    "https://github.com/#{self.github.split('/').last}"
   end
 
   # 是否是管理员
@@ -114,7 +111,7 @@ class User
   def send_welcome_mail
     UserMailer.welcome(self.id).deliver
   end
-  
+
   # 保存用户所在城市
   before_save :store_location
   def store_location
@@ -190,7 +187,7 @@ class User
                :likeable_type => likeable.class,
                :user_id => self.id).destroy
   end
-  
+
   # 收藏话题
   def favorite_topic(topic_id)
     return false if topic_id.blank?
@@ -199,7 +196,7 @@ class User
     self.push(:favorite_topic_ids, topic_id)
     true
   end
-  
+
   # 取消对话题的收藏
   def unfavorite_topic(topic_id)
     return false if topic_id.blank?
@@ -216,32 +213,11 @@ class User
     self.login = "Guest"
     self.bio = ""
     self.website = ""
-    self.github = ""
     self.tagline = ""
     self.location = ""
     self.authorizations = []
     self.state = STATE[:deleted]
     self.save(:validate => false)
-  end
-
-  # Github 项目
-  def github_repositories
-    return [] if self.github.blank?
-    count = 14
-    cache_key = "github_repositories:#{self.github}+#{count}+v1"
-    items = Rails.cache.read(cache_key)
-    if items == nil
-      begin
-        github = GitHub::API.user(self.github)
-        items = github.repositories.sort { |a1,a2| a2.watchers <=> a1.watchers }.take(count)
-        Rails.cache.write(cache_key, items, :expires_in => 7.days)
-      rescue => e
-        Rails.logger.error("Github Repositiory fetch Error: #{e}")
-        items = []
-        Rails.cache.write(cache_key, items, :expires_in => 1.days)
-      end
-    end
-    items
   end
 
   # 重新生成 Private Token

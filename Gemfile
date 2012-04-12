@@ -10,6 +10,8 @@ group :assets do
   gem 'sass-rails', "  ~> 3.2.3"
   gem 'coffee-rails', "~> 3.2.1"
   gem 'uglifier', '>= 1.0.3'
+  gem 'execjs', '~> 1.2.9'
+  gem 'therubyracer', '~> 0.10.1'
 end
 
 # 上传组件
@@ -37,12 +39,10 @@ gem 'anjlab-bootstrap-rails', '>= 2.0', :require => 'bootstrap-rails'
 gem 'bootstrap-will_paginate', '0.0.3'
 gem 'bootstrap_helper'
 
-# 三方平台 OAuth 验证登陆
+# 第三方平台 OAuth 验证登陆
 gem "omniauth", "~> 1.0.1"
-gem 'omniauth-openid', "~> 1.0.1"
-gem "omniauth-github", "~> 1.0.0"
-gem "omniauth-twitter", "~> 0.0.7"
 gem "omniauth-douban", :git => "git://github.com/ballantyne/omniauth-douban.git"
+gem 'omniauth-weibo', :git => 'git://github.com/ballantyne/omniauth-weibo.git'
 
 # permission
 gem "cancan", "~> 1.6.7"
@@ -89,16 +89,14 @@ gem 'daemon-spawn'
 # 禁用 assets 日志
 gem 'quiet_assets', :git => 'git://github.com/AgilionApps/quiet_assets.git'
 
-# Github API
-gem 'ruby-github'
-
 # API
 gem 'grape', :git => 'git://github.com/intridea/grape.git', :branch => 'frontier'
+
+gem "memcache-client", "1.8.5"
 
 group :development, :test do
   gem 'capistrano', '2.9.0'
   gem 'chunky_png', "1.2.5"
-  gem "memcache-client", "1.8.5"
   gem 'progress_bar'
   gem 'rspec-rails', '~> 2.8.1'
   gem 'factory_girl_rails'

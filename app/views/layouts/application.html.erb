@@ -13,9 +13,9 @@
   <meta name="keywords" content="<%= @meta_keywords %>" />
   <meta name="description" content="<%= @meta_description %>" />
   <meta charset='utf-8'>
-  <link rel="shortcut icon" href="<%= asset_path("big_logo.png") %>" /> 
+  <link rel="shortcut icon" href="http://musicianguide.cn/favicon.ico" />
   <%= csrf_meta_tag %>
-  <%= auto_discovery_link_tag(:rss,feed_topics_url,:title => '订阅最新贴') %>
+  <%= auto_discovery_link_tag(:rss,feed_topics_url,:title => '订阅最新帖') %>
   <%= yield :node_feed_link %>
 </head>
 <body data-offset="50">
@@ -27,15 +27,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
-        <%= link_to Setting.app_name, root_path, :class => "brand span2" %>
+        <%= link_to Setting.app_name, root_path, :class => "brand span1" %>
         <div class="nav-collapse">
           <%= render_list :class => "nav" do |li|
              li << link_to(t("menu.topics"), topics_path)
-             li << link_to(t("menu.wiki"), pages_path )
-             li << link_to(t("menu.sites"), sites_path )
              li << link_to(t("menu.users"), users_path)
           end %>
           <%= render "common/search_form" %>
+          <%= render_list :class => "nav" do |li|
+           li << link_to(t("menu.hepaimusic"), 'http://hepaimusic.com', :target => '_blank')
+           li << link_to(t("menu.musicianguide"), 'http://musicianguide.cn', :target => '_blank')
+          end %>
           <%= render "common/user_nav" %>
         </div>
       </div>
