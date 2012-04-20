@@ -30,10 +30,6 @@
            li << link_to(t("menu.users"), users_path)
          end %>
         <%= render "common/search_form" %>
-         <%= render_list :class => "nav" do |li|
-           li << link_to(t("menu.hepaimusic"), 'http://hepaimusic.com', :target => '_blank')
-           li << link_to(t("menu.musicianguide"), 'http://musicianguide.cn', :target => '_blank')
-         end %>
         <%= render "common/user_nav" %>
       </div>
     </div>
