@@ -1,0 +1,21 @@
+.item.box.span5
+  - if weibo_topic.embed_images?
+    .img
+      = link_to weibo_topic.images[:original], target: '_blank' do
+        = image_tag weibo_topic.images[:thumb]
+  %p= weibo_topic.content
+  - if weibo_topic.retweeted?
+    .retweet-info
+      %span.arrow.arrow-line ◆
+      %span.arrow ◆
+      = weibo_topic.retweet_text
+  .user-info
+    .avatar
+      = link_to weibo_topic.user_url, target: '_blank' do
+        = image_tag weibo_topic.user['profile_image_url']
+    .info
+      %p
+        = link_to weibo_topic.user['screen_name'], weibo_topic.user_url, target: '_blank'
+      %p
+        #{time_ago_in_words weibo_topic.sent_at}前
+        #{weibo_topic.retweeted? ? '转发' : '创建' }

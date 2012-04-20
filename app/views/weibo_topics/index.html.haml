@@ -1,0 +1,8 @@
+.box
+  只要在发微博时加上话题标记 ##{Setting.weibo_trend_name}#，你的微博就可以出现在这里
+
+#weibo_topics.row
+  = render @weibo_topics
+
+- content_for :scripts do
+  = javascript_include_tag 'weibo_topics'

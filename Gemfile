@@ -92,6 +92,8 @@ gem 'grape', :git => 'git://github.com/intridea/grape.git', :branch => 'frontier
 
 gem "memcache-client", "1.8.5"
 
+gem 'haml'
+
 group :development, :test do
   gem 'capistrano', '2.9.0'
   gem 'chunky_png', "1.2.5"

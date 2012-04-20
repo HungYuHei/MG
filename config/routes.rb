@@ -2,6 +2,7 @@ RubyChina::Application.routes.draw do
   require 'api'
 
   resources :sites
+  resources :weibo_topics, :only => [:index]
 
   resources :posts
   resources :pages, :path => "wiki" do
