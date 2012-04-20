@@ -9,7 +9,7 @@ class User
 
         if user = User.where("authorizations.provider" => provider , "authorizations.uid" => uid).first
           user
-        elsif user = User.find_by_email(data["email"])
+        elsif data['email'].present? and user = User.find_by_email(data["email"])
           user.bind_service(response)
           user
         else
@@ -38,10 +38,24 @@ class User
           user.login = "u#{Time.now.to_i}" # TODO: possibly duplicated user login here. What should we do?
         end
 
+        user.remote_avatar_url = convert_image_url(provider, data['image'])
         user.password = Devise.friendly_token[0, 20]
         user.location = data["location"]
         user.tagline = data["description"]
       end
     end
+
+    private
+
+      # hack image size from 50x50 to the large one(180x180)
+      def convert_image_url(provider, url)
+        if provider == 'weibo'
+          url && url.gsub!(/\/50\//, '/180/') << '.jpg'
+        elsif provider == 'douban'
+          url && url.gsub!(/\/icon\/u/, '/icon/ul')
+        end
+        url
+      end
+
   end
 end
